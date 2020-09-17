@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Calculadora</title>
   <meta charset="utf-8">
@@ -11,12 +12,30 @@
     const cuadrado = () => {
       let num = document.getElementById("pantalla");
       num.value = num.value * num.value;
+      rellenar_info();
+    }
+
+    const rellenar_info = () => { // actualiza el h2 según el resultado de la operación
+      let info = document.getElementById("info"); // almacena h2 en info
+      let res = document.getElementById("pantalla"); // almacena input en res
+      if (res.value < 100) { // compara el valor de input; valores menores a 100
+        info.innerHTML = "Info: el resultado es menor que 100"; // cambia el texto de info 
+      } else if ((res.value >= 100) && (res.value <= 200)) { // compara valores entre 100 y 200
+        info.innerHTML = "Info: el resultado está entre 100 y 200";
+      } else { // para el resto de valores
+        info.innerHTML = "Info: el resultado es superior a 200";
+      }
     }
   </script>
 </head>
+
 <body>
   Número:
   <input type="text" id="pantalla" onclick="vaciar()">
+  <h2 id="info" class="grande" title="Info sobre el número">Info sobre el número</h2>
   <button id="cuadrado" onclick="cuadrado()">x<sup>2</sup></button>
- </body>
+  <footer>&copy; David A. Pérez - Ejercicio P2P obligatorio | Módulo 3 - <em>Introduccióna ES6+, let, VS Code, DOM,
+      boolean, if, bucles</em> - Desarrollo frontend 10ª ed.</footer>
+</body>
+
 </html>
