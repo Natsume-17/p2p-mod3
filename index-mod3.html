@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Calculadora P2P módulo 3</title>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="js-mod3.js"></script>
+  <link rel="stylesheet" href="estilos-mod3.css">
+</head>
+
+<body>
+  <h1>Calculadora web</h1>
+  Número:
+  <input type="text" id="pantalla" onclick="vaciar()">
+  <h2 id="info" class="grande" title="Info sobre el número">Info sobre el número</h2>
+  <h3 class="separador">Operaciones unitarias</h3>
+  <button id="cuadrado" onclick="cuadrado()">x<sup>2</sup></button>
+  <button id="modulo" onclick="mod()">|x|</button>
+  <button id="factorial" onclick="fact()">n!</button>
+  <h3 class="separador">Operaciones binarias</h3>
+  <button id="suma" onclick="add()">+</button>
+  <button id="resta" onclick="sub()">-</button>
+  <button id="multiplicacion" onclick="mul()">*</button>
+  <button id="division" onclick="div()">/</button>
+  <button id="resto" onclick="rem()">%</button>
+  <button id="potencia" onclick="pow()">x<sup>y</sup></button>
+  <button id="igual" onclick="eq()">=</button>
+  <footer>&copy; David A. Pérez - Ejercicio P2P obligatorio | Módulo 3 - <em>Introduccióna ES6+, let, VS Code, DOM,
+      boolean, if, bucles</em> - Desarrollo frontend 10ª ed.</footer>
+</body>
+
+</html>
