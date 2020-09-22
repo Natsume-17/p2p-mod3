@@ -2,7 +2,6 @@
 const vaciar = () => {
     document.getElementById("pantalla").value = "";
 }
-
 const rellenar_info = () => { // actualiza el h2 según el resultado de la operación
     let info = document.getElementById("info"); // almacena h2 en info
     let res = document.getElementById("pantalla"); // almacena input en res
@@ -20,7 +19,6 @@ const cuadrado = () => {
     num.value *= num.value;
     rellenar_info();
 }
-
 const mod = () => { // calcula el módulo de un número
     let num = document.getElementById("pantalla");
     if (num.value < 0) {
@@ -30,7 +28,6 @@ const mod = () => { // calcula el módulo de un número
     }
     rellenar_info();
 }
-
 const fact = () => { // calcula el factorial de un número
     let num = document.getElementById("pantalla");
     if (num.value <= 0) {
@@ -103,4 +100,30 @@ const eq = () => { // calcula la operación elegida
         default:
             alert("Elige una operación.");
     }
+}
+// ** Operaciones en formato CSV ** //
+const sumatorio = () => { // función sumatorio
+    let num = document.getElementById("pantalla");
+    let lista = num.value.split(","); // convierte el string en un array
+    let i = 0;
+    suma = 0;
+    while (i < lista.length) suma += +lista[i++];
+    num.value = suma;
+    rellenar_info();
+}
+const ordenar = () => { // función ordenar con un método de ordenación ascendente
+    let num = document.getElementById("pantalla");
+    let lista = num.value.split(",");
+    num.value = lista.sort((a, b) => a - b); // ordena el array, comparando los elementos
+}
+const revertir = () => { // función revertir
+    let num = document.getElementById("pantalla");
+    let lista = num.value.split(",");
+    num.value = lista.reverse();
+}
+const quitar = () => {
+    let num = document.getElementById("pantalla");
+    let lista = num.value.split(",");
+    num.value = lista.pop(); // quita el último elemento
+    num.value = lista; // muestra el array resultante
 }
