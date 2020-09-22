@@ -28,6 +28,7 @@ h1 {
     margin-bottom: 1em;
 }
 input#pantalla {
+    width: 80%;
     text-align: right;
     font: bold 1.45em monospace;
     margin: 0 auto;

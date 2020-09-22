@@ -13,6 +13,15 @@ const rellenar_info = () => { // actualiza el h2 según el resultado de la opera
         info.innerHTML = "Info: el resultado es superior a 200";
     }
 }
+// ** Validar el  input (no funciona y falta la parte de arrays) ** //
+const validar = () => {
+    let num = document.getElementById("pantalla").value;
+    let info = document.getElementById("info");
+    if (isNaN(num)) {
+        num.value = "Error.";
+        info.innerHTML = "Introduce un número.";
+    }
+}
 // ** Operaciones unitarias ** //
 const cuadrado = () => {
     let num = document.getElementById("pantalla");
@@ -30,8 +39,10 @@ const mod = () => { // calcula el módulo de un número
 }
 const fact = () => { // calcula el factorial de un número
     let num = document.getElementById("pantalla");
+    let info = document.getElementById("info");
     if (num.value <= 0) {
-        alert("Introduce un número positivo.");
+        num.value = "Error.";
+        info.innerHTML = "Introduce un número positivo.";
     } else {
         for (let i = num.value - 1; i > 0; i--) {
             num.value *= i;
