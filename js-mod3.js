@@ -1,6 +1,7 @@
 // ** Funciones generales ** //
 const vaciar = () => {
     document.getElementById("pantalla").value = "";
+    document.getElementById("info").innerHTML = "Info sobre el número";
 }
 const rellenar_info = () => { // actualiza el h2 según el resultado de la operación
     let info = document.getElementById("info"); // almacena h2 en info
@@ -13,41 +14,57 @@ const rellenar_info = () => { // actualiza el h2 según el resultado de la opera
         info.innerHTML = "Info: el resultado es superior a 200";
     }
 }
-// ** Validar el  input (no funciona y falta la parte de arrays) ** //
+// ** Validar el  input para unitarias y binarias ** //
+let esNum;
 const validar = () => {
-    let num = document.getElementById("pantalla").value;
+    let num = document.getElementById("pantalla");
     let info = document.getElementById("info");
-    if (isNaN(num)) {
-        num.value = "Error.";
-        info.innerHTML = "Introduce un número.";
+    if (isNaN(num.value) || num.value === "") {
+        info.innerHTML = "Introduce una cifra, por favor";
+        esNum = false;
+        document.getElementById("pantalla").value = "Error";
+    } else {
+        esNum = true;
     }
-}
+};
 // ** Operaciones unitarias ** //
 const cuadrado = () => {
-    let num = document.getElementById("pantalla");
-    num.value *= num.value;
-    rellenar_info();
+    validar();
+    if (esNum === true) {
+        let num = document.getElementById("pantalla");
+        num.value *= num.value;
+        rellenar_info();
+    }
 }
 const mod = () => { // calcula el módulo de un número
-    let num = document.getElementById("pantalla");
-    if (num.value < 0) {
-        num.value = -num.value;
-    } else {
-        num.value = num.value;
-    }
-    rellenar_info();
-}
-const fact = () => { // calcula el factorial de un número
-    let num = document.getElementById("pantalla");
-    let info = document.getElementById("info");
-    if (num.value <= 0) {
-        num.value = "Error.";
-        info.innerHTML = "Introduce un número positivo.";
-    } else {
-        for (let i = num.value - 1; i > 0; i--) {
-            num.value *= i;
+    validar();
+    if (esNum === true) {
+        let num = document.getElementById("pantalla");
+        if (num.value < 0) {
+            num.value = -num.value;
+        } else {
+            num.value = num.value;
         }
         rellenar_info();
+    }
+}
+const fact = () => { // calcula el factorial de un número
+    validar();
+    if (esNum === true) {
+        let num = document.getElementById("pantalla");
+        let info = document.getElementById("info");
+        if (num.value < 0) {
+            num.value = "Error.";
+            info.innerHTML = "Introduce un número positivo";
+        } else if (num.value === "0") {
+            num.value = 1;
+            rellenar_info();
+        } else {
+            for (let i = num.value - 1; i > 0; i--) {
+                num.value *= i;
+            }
+            rellenar_info();
+        }
     }
 }
 // ** Operaciones binarias ** //
@@ -59,28 +76,46 @@ const init = () => { // inicializa las variables globales
     op = "";
 }
 const add = () => { // función suma
-    init();
-    op = "+";
+    validar();
+    if (esNum === true) {
+        init();
+        op = "+";
+    }
 }
 const sub = () => { // función resta
-    init();
-    op = "-";
+    validar();
+    if (esNum === true) {
+        init();
+        op = "-";
+    }
 }
 const mul = () => { // función multiplicación
-    init();
-    op = "*";
+    validar();
+    if (esNum === true) {
+        init();
+        op = "*";
+    }
 }
 const div = () => { // función división
-    init();
-    op = "/";
+    validar();
+    if (esNum === true) {
+        init();
+        op = "/";
+    }
 }
 const rem = () => { // función resto de una división
-    init();
-    op = "%";
+    validar();
+    if (esNum === true) {
+        init();
+        op = "%";
+    }
 }
 const pow = () => { // función potencia
-    init();
-    op = "x_y";
+    validar();
+    if (esNum === true) {
+        init();
+        op = "x_y";
+    }
 }
 const eq = () => { // calcula la operación elegida
     switch (op) {
@@ -109,32 +144,84 @@ const eq = () => { // calcula la operación elegida
             rellenar_info();
             break;
         default:
-            alert("Elige una operación.");
+            document.getElementById("info").innerHTML = "Elige una operación";
     }
 }
 // ** Operaciones en formato CSV ** //
 const sumatorio = () => { // función sumatorio
     let num = document.getElementById("pantalla");
-    let lista = num.value.split(","); // convierte el string en un array
-    let i = 0;
-    suma = 0;
-    while (i < lista.length) suma += +lista[i++];
-    num.value = suma;
-    rellenar_info();
+    let lista = num.value.split(","); // convierte el string en array
+    let info = document.getElementById("info");
+    if (lista.length > 1 && lista !== undefined) { // para verificar que el array tiene más de un elemento
+        let i = 0;
+        let suma = 0;
+        while (i < lista.length) suma += +lista[i++]; // recorre el array y suma cada elemento
+        if (isNaN(suma)) { // comprueba si 'suma' no es un número
+            num.value = "Error.";
+            info.innerHTML = "Uno o más valores no eran cifras.";
+        } else {
+            num.value = suma;
+            rellenar_info();
+        }
+
+    } else {
+        num.value = "Error.";
+        info.innerHTML = "Introduce dos o más cifras, separadas por comas.";
+    }
 }
 const ordenar = () => { // función ordenar con un método de ordenación ascendente
     let num = document.getElementById("pantalla");
-    let lista = num.value.split(",");
-    num.value = lista.sort((a, b) => a - b); // ordena el array, comparando los elementos
+    let lista = num.value.split(","); // convierte el string en array
+    let info = document.getElementById("info");
+    if (lista.length > 1 && lista !== undefined) { // para verificar que el array tiene más de un elemento
+        for (let i = 0; i < lista.length; i++) { // recorre el array 'lista'
+            if (isNaN(lista[i])) { // comprueba si los elementos del array no son números
+                num.value = "Error.";
+                info.innerHTML = "Uno de los valores no era una cifra";
+            } else {
+                num.value = lista.sort((a, b) => a - b); // ordena el array, comparando los elementos
+            }
+        }
+    } else {
+        num.value = "Error.";
+        info.innerHTML = "Introduce dos o más cifras, separadas por comas.";
+    }
 }
 const revertir = () => { // función revertir
     let num = document.getElementById("pantalla");
-    let lista = num.value.split(",");
-    num.value = lista.reverse();
+    let lista = num.value.split(","); // convierte el string en array
+    let info = document.getElementById("info");
+    if (lista.length > 1 && lista !== undefined) { // para verificar que el array tiene más de un elemento
+        for (let i = 0; i < lista.length; i++) { // recorre el array 'lista'
+            if (isNaN(lista[i])) { // comprueba si los elementos del array no son números
+                num.value = "Error.";
+                info.innerHTML = "Uno de los valores no era una cifra";
+            } else {
+                num.value = lista.reverse();
+            }
+        }
+    } else {
+        num.value = "Error.";
+        info.innerHTML = "Introduce dos o más cifras, separadas por comas.";
+    }
 }
 const quitar = () => {
     let num = document.getElementById("pantalla");
-    let lista = num.value.split(",");
-    num.value = lista.pop(); // quita el último elemento
-    num.value = lista; // muestra el array resultante
+    let lista = num.value.split(","); // convierte el string en array
+    let info = document.getElementById("info");
+    if (lista.length > 1 && lista !== undefined) { // para verificar que el array tiene más de un elemento
+        let i = 0;
+        let suma = 0;
+        while (i < lista.length) suma += +lista[i++]; // recorre el array y suma cada elemento
+        if (isNaN(suma)) { // comprueba si 'suma' no es un número
+            num.value = "Error.";
+            info.innerHTML = "Uno o más valores no eran cifras";
+        } else {
+            num.value = lista.pop(); // elimina el última elemento del array
+            num.value = lista; // muestra el array sin el último elemento
+        }
+    } else {
+        num.value = "Error.";
+        info.innerHTML = "Introduce dos o más cifras, separadas por comas.";
+    }
 }
